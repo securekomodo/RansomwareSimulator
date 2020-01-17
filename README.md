@@ -1,5 +1,5 @@
 # RansomwareSimulator
-Powershell script to emulate the "blast radius" of a ransomware infection.
+Powershell script to emulate the "blast radius" of a ransomware infection. Does not actually encrypt anything!
 
 
 # Logic
