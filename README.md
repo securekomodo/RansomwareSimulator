@@ -1,5 +1,7 @@
 # RansomwareSimulator
-Powershell script to emulate the "blast radius" of a ransomware infection. Does not actually encrypt anything!
+Multithreaded Powershell script to emulate the "blast radius" of a ransomware infection. Does not actually encrypt anything!
+
+Uses passive checks to test write priv to discovered files and reports on them.
 
 
 # Logic
@@ -17,7 +19,6 @@ Powershell script to emulate the "blast radius" of a ransomware infection. Does 
 - Report the top 10 File types (extensions) that were "encrypted"
 
 
-# Todo
-This script is not using threads or jobs so enumerating large network drives or local drives will take a significant amount of time.
+# Updates:
 
-- Find a way to implement Powershell Runspaces or PSJobs to complete this task
+Implemented Runspaces and chunking to drasitically improver performance.
