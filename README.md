@@ -5,7 +5,6 @@ Uses passive checks to test write priv to discovered files and reports on them.
 
 
 # Logic
-- Powershell called via Office Macro simulating initial point of entry
 - Discover Local Drives
 - Discover Mapped Drives
 - Loop through each drive
@@ -21,4 +20,4 @@ Uses passive checks to test write priv to discovered files and reports on them.
 
 # Updates:
 
-Implemented Runspaces and chunking to drasitically improver performance.
+Implemented Runspaces and chunking to improve performance.
